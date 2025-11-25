@@ -1,0 +1,35 @@
+using UnityEngine;
+
+public class PolarRunnerMovement : MonoBehaviour
+{
+    public Transform leftHand;
+    public Transform rightHand;
+    public float armLength = 3.0f; // Long arms
+    public float swingForce = 10f;
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        // Simple input for swinging arms
+        if (Input.GetKeyDown(KeyCode.A)) // Left arm swing
+        {
+            SwingArm(leftHand);
+        }
+        if (Input.GetKeyDown(KeyCode.D)) // Right arm swing
+        {
+            SwingArm(rightHand);
+        }
+    }
+
+    void SwingArm(Transform hand)
+    {
+        // Apply force opposite to hand direction
+        Vector3 forceDir = (transform.position - hand.position).normalized;
+        rb.AddForce(forceDir * swingForce, ForceMode.VelocityChange);
+    }
+}
